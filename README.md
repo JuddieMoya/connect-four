@@ -23,6 +23,6 @@ Connect Four Development Plan
         b)if/else check if column is full
         
 
-3. until a player gets four pieces connecting in a row(horizontally, vertically,diagonally), or they fill all of the columns (called a tie)     
+3. stack pieces until a player gets four pieces connecting in a row(horizontally, vertically,diagonally), or they fill all of the columns (called a tie)     
 
     1)set up if/ else statements for red win/black win or tie conditions
