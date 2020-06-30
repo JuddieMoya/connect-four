@@ -1,3 +1,7 @@
+We recieved help from the following people: Amanda Yonce,
+
+
+
 Group members: Judith Moya, Reginald Jefferson, Jalon Dodson, and Amanda Simmons
 
 
