@@ -9,8 +9,8 @@
 }
 .row {
     background-color: transparent;
-    width: 100%;
-    height: 15%;
+    width: 99.5%;
+    height: 15.5%;
     border: 3px solid rgb(71, 163, 238);
    
 }
@@ -25,6 +25,9 @@
     flex-grow: 1;
     border: 3px solid rgb(71, 163, 238);
     /* flex-direction: column-reverse; */
+}
+.column:hover {
+    background-color: rgba(71, 163, 238, 0.5);
 }
 .piece {
     height: 80px;
