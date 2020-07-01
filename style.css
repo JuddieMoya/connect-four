@@ -5,6 +5,7 @@
 #board {
     display: flex;
     height: 500px;
+
     position: relative;
 }
 .row {
@@ -24,11 +25,11 @@
     display: flex;
     flex-grow: 1;
     border: 3px solid rgb(71, 163, 238);
-    /* flex-direction: column-reverse; */
+    flex-direction: column-reverse;
 }
 .piece {
-    height: 80px;
-    width: 80px;
+    height: 83px;
+    width: 83px;
     border-radius: 50%;
     display: flex;
 }
