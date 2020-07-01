@@ -64,7 +64,6 @@ function columnClickHandler(evt) {
             displayWin();
         } else {
             switchToNextPlayer();
- 
        }
    }
 }
@@ -83,12 +82,11 @@ function initGame() {
     initListeners();
     displayCurrentPlayer(player);
 }
-
 initGame();
 
 function vertWin(model) {
     for (let i = 0; i < 3; i++) {
-        for (let n = 0; n < model[i.length]; n++) {
+        for (let n = 0; n < model[i].length; n++) {
             if ((model[i][n] === model[i+1][n]) && 
             (model[i][n] === model[i+2][n]) &&
             (model[i][n] === model[i+3][n]) &&
@@ -102,10 +100,31 @@ function vertWin(model) {
 
 
 function horizWin(model) {
+    for (let i = 0; i < 3; i++) {
+        for (let n = 0; n < model[i].length; n++) {
+            if ((model[i][n] === model[i][n+1]) && 
+            (model[i][n] === model[i][n+2]) &&
+            (model[i][n] === model[i][n+3]) &&
+            (model[i][n] !== null)) {
+                return true;
+            }
+        }
+    }
     return false;
 }
 
+
 function diagUpWin(model) {
+    for (let i = 0; i < 3; i++) {
+        for (let n = 0; n < model[i].length; n++) {
+            if ((model[i][n] === model[i+1][n+1]) && 
+            (model[i][n] === model[i+2][n+2]) &&
+            (model[i][n] === model[i+3][n+3]) &&
+            (model[i][n] !== null)) {
+                return true;
+            }
+        }
+    }
     return false;
 }
 
@@ -131,3 +150,95 @@ function isGameOver(model) {
 
     return false;
 }
+
+function testVert() {
+    console.log("Empty board: " + (vertWin([
+        [ null, null, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ]
+    ]) === true))
+    console.log("Player 1 win on Column 1: " + (vertWin([
+        [ null, null, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ],
+        [    1, null, null, null, null, null, null ],
+        [    1, null, null, null, null, null, null ],
+        [    1, null, null, null, null, null, null ],
+        [    1, null, null, null, null, null, null ]
+    ]) === true))
+    console.log("Player 2 win on Column 1: " + (vertWin([
+        [ null, null, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ],
+        [    2, null, null, null, null, null, null ],
+        [    2, null, null, null, null, null, null ],
+        [    2, null, null, null, null, null, null ],
+        [    2, null, null, null, null, null, null ]
+    ]) === true))
+    console.log("Player 2 win on top of Column 7: " + (vertWin([
+        [ null, null, null, null, null, null, 2 ],
+        [ null, null, null, null, null, null, 2 ],
+        [ null, null, null, null, null, null, 2 ],
+        [ null, null, null, null, null, null, 2 ],
+        [ null, null, null, null, null, null, 1 ],
+        [ null, null, null, null, null, null, 1 ]
+    ]) === true))
+    console.log("Player 1 win on middle of Column 3: " + (vertWin([
+        [ null, null, null, null, null, null, 2 ],
+        [ null, null,    1, null, null, null, 2 ],
+        [ null, null,    1, null, null, null, 2 ],
+        [ null, null,    1, null, null, null, 2 ],
+        [ null, null,    1, null, null, null, 1 ],
+        [ null, null, null, null, null, null, 1 ]
+    ]) === true))
+    console.log("Random board with no winner yet: " + (vertWin([
+        [ null, null, null, null, null, null, null ],
+        [ null, null,    2, null, null, null, null ],
+        [    1, null,    2, null,    2, null, null ],
+        [    1, null,    2, null,    1, null, null ],
+        [    2,    2,    1,    1,    2, null,    2 ],
+        [    2,    1,    2,    1,    1,    2,    1 ]
+    ]) === false))
+}
+testVert();
+
+function testHoriz() {
+    console.log("Empty board: " + (horizWin([
+        [ null, null, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ]
+    ]) === true))
+    console.log("Player 1 win on Column 1: " + (horizWin([
+        [ null, null, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ],
+        [ 2, 2, 2, 2, null, null, null ],
+        [ null, null, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ]
+    ]) === true))
+}
+testHoriz();
+
+function testDiag() {
+    console.log("Empty board: " + (diagUpWin([
+        [ null, null, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ]
+    ]) === true))
+    console.log("Player 1 win on Column 1: " + (diagUpWin([
+        [ null, null, null, null, 1, null, null ],
+        [ null, null, null, 1, null, null, null ],
+        [ null, null, 1, null, null, null, null ],
+        [ null, 1, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ]
+    ]) === true))
+}
+testDiag();
