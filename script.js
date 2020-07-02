@@ -75,33 +75,13 @@ function vertWin(model) {
 }
 
 
-
-
-
-
-
-
-// const winnerVertical = function (model) {
-//     for (let rowNum=0; rowNum<3; rowNum++) {
-//         for (let colNum=0; colNum<model[rowNum].length; colNum++) {
-//             if (model[rowNum][colNum] === model[rowNum+1][colNum] &&
-//                 model[rowNum][colNum] === model[rowNum+2][colNum] &&
-//                 model[rowNum][colNum] === model[rowNum+3][colNum] &&
-//                 model[rowNum][colNum] !== null) {
-//                 return true
-//             }
-//         }
-//     }
-//     return false
-// }
 const winnerHorizontal = function (model) {
-    
-    for (let colNum=0; colNum<3; colNum++) {
-        for (let rowNum=0; rowNum<model[colNum].length; rowNum++) {
-            if (model[colNum][rowNum] === model[colNum+1][rowNum] &&
-                model[colNum][rowNum] === model[colNum+2][rowNum] &&
-                model[colNum][rowNum] === model[colNum+3][rowNum] &&
-                model[colNum][rowNum] !== null) {
+    for (let rowNum=0; rowNum<6; rowNum++) {
+        for (let colNum=0; colNum<model[rowNum].length; colNum++) {
+            if (model[rowNum][colNum] === model[rowNum][colNum+1] &&
+                model[rowNum][colNum] === model[rowNum][colNum+2] &&
+                model[rowNum][colNum] === model[rowNum][colNum+3] &&
+                model[rowNum][colNum] !== null) {
                 return true
             }
         }
@@ -110,11 +90,40 @@ const winnerHorizontal = function (model) {
 }
 
 const winnerDiagonalUp = function (model) {
+    for (let rowNum=0; rowNum<3; rowNum++) {
+                for (let colNum=0; colNum<model[rowNum].length; colNum++) {
+                    if (model[rowNum][colNum] === model[rowNum+1][colNum+1] &&
+                        model[rowNum][colNum] === model[rowNum+2][colNum+2] &&
+                        model[rowNum][colNum] === model[rowNum+3][colNum+3] &&
+                        model[rowNum][colNum] !== null) {
+                        return true
+                    }
+                }
+            }
     return false
 }
+
 const winnerDiagonalDown = function (model) {
+    for (let rowNum=0; rowNum<3; rowNum++) {
+        for (let colNum=0; colNum<4; colNum++) {
+            if ( 
+                model[rowNum][colNum] !== null &&
+                model[rowNum][colNum] === model[rowNum+1][colNum+1] &&
+                model[rowNum][colNum] === model[rowNum+2][colNum+2] &&
+                model[rowNum][colNum] === model[rowNum+3][colNum+3] 
+            ){
+                console.log(model[rowNum+1][colNum+1])
+                console.log(model[rowNum+2][colNum+2])
+                console.log(model[rowNum+3][colNum+3])
+
+                return true
+            }
+        }
+    }
     return false
 }
+
+
 const isATie = function (model) {
     return false
 }
@@ -179,59 +188,58 @@ initializeGame()
 
 
 
-const testwinnerHorizontal = function () {
-    console.log("Empty board: " + (winnerHorizontal([
+const testwinnerDiagonalUp = function () {
+    console.log("Empty board: " + (winnerDiagonalUp([
         [ null, null, null, null, null, null, null ],
         [ null, null, null, null, null, null, null ],
-        [ null, null, null, null, null, null, null ],
-        [ null, null, null, null, null, null, null ],
-        [ null, null, null, null, null, null, null ],
-        [ null, null, null, null, null, null, null ]
-    ]) === true))
-    console.log("Player 1 win on Column 1: " + (winnerHorizontal([
-        [ null, null, null, null, null, null, null ],
+        [ null, null, null,    2, null, null, null ],
+        [ null, null, null, null,    2, null, null ],
+        [ null, null, null, null, null,    2, null ],
+        [ null, null, null, null, null, null,    2 ]
+    ])))
+    console.log("Player 1 win on Column 1: " + (winnerDiagonalUp([
+        [ null, null, null,    2,    2,    2,    2 ],
         [ null, null, null, null, null, null, null ],
         [    1, null, null, null, null, null, null ],
         [    1, null, null, null, null, null, null ],
         [    1, null, null, null, null, null, null ],
         [    1, null, null, null, null, null, null ]
-    ]) === true))
-    console.log("Player 2 win on Column 1: " + (winnerHorizontal([
+    ])))
+    console.log("Player 2 win on Column 1: " + (winnerDiagonalUp([
+        [    2, null, null, null, null, null, null ],
+        [ null,    2, null, null, null, null, null ],
+        [ null, null,    2, null, null, null, null ],
+        [ null, null, null,    2, null, null, null ],
         [ null, null, null, null, null, null, null ],
-        [ null, null, null, null, null, null, null ],
-        [    2, null, null, null, null, null, null ],
-        [    2, null, null, null, null, null, null ],
-        [    2, null, null, null, null, null, null ],
-        [    2, null, null, null, null, null, null ]
-    ]) === true))
-    console.log("Player 2 win on top of Column 7: " + (winnerHorizontal([
+        [    2,    2,    2,    2, null, null, null ]
+    ])))
+    console.log("Player 2 win on top of Column 7: " + (winnerDiagonalUp([
+        [ null, null, null,    2, null, null,  2],
+        [ null, null, null, null,    2, null,  2],
+        [ null,    2,    2,    2,    2,    2,  2],
+        [ null, null, null, null, null, null,  2],
+        [ null, null, null, null, null, null,  1],
+        [ null, null, null, null, null, null,  1]
+    ])))
+    console.log("Player 1 win on middle of Column 3: " + (winnerDiagonalUp([
         [ null, null, null, null, null, null, 2 ],
-        [ null, null, null, null, null, null, 2 ],
-        [ null, null, null, null, null, null, 2 ],
-        [ null, null, null, null, null, null, 2 ],
-        [ null, null, null, null, null, null, 1 ],
-        [ null, null, null, null, null, null, 1 ]
-    ]) === true))
-    console.log("Player 1 win on middle of Column 3: " + (winnerHorizontal([
-        [ null, null, null, null, null, null, 2 ],
-        [ null, null,    1, null, null, null, 2 ],
-        [ null, null,    1, null, null, null, 2 ],
-        [ null, null,    1, null, null, null, 2 ],
+        [ null, null, null, null, null,    1, null ],
+        [ null, null, null, null,    1, null, 2 ],
+        [ null, null, null,    1, null, null, 2 ],
         [ null, null,    1, null, null, null, 1 ],
         [ null, null, null, null, null, null, 1 ]
-    ]) === true))
-    console.log("Random board with no winner yet: " + (winnerHorizontal([
+    ])))
+    console.log("Random board with no winner yet: " + (winnerDiagonalUp([
         [ null, null, null, null, null, null, null ],
         [ null, null,    2, null, null, null, null ],
         [    1, null,    2, null,    2, null, null ],
         [    1, null,    2, null,    1, null, null ],
         [    2,    2,    1,    1,    2, null,    2 ],
         [    2,    1,    2,    1,    1,    2,    1 ]
-    ]) === false))
+    ])))
 }
-testwinnerHorizontal()
+testwinnerDiagonalUp()
 
 
 
 
- 

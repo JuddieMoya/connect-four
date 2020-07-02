@@ -33,9 +33,9 @@
     border-radius: 50%;
     display: flex;
 }
-#red {
+.red {
     background-color: red;
 }
-#black {
+.black {
     background-color: black;
 }
