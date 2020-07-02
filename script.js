@@ -31,6 +31,7 @@ const boardModel = [
 let currentPlayer = 1 // 1 or 2
 let numberOfDiscsDropped = 0
 
+
 const displayMessage = function (message) { // Stub
     // Clear out the message div
     // Add new message to div
@@ -46,53 +47,24 @@ const displayWinMessage = function () {
     displayMessage("Winner is _____")    
 }
 
-const isColumnFull = function (colNum) {
+const isColumnFull = function () {
     // TODO: Look at the boardModel to determine if col is full
     for (let rowNum=0; rowNum<6; rowNum++) {
+        
         for (let colNum=0; colNum<boardModel[rowNum].length; colNum++) {
-           
             if (colNum.childElementCount !== 6) {
-                console.log(rowNum.childElementCount)
+                console.log(colNum.childElementCount)
 
                 return false // or true
             }
         }
+        console.log(rowNum)
     }
+
     console.log(colNum)
     return true
-
 }
 
-// const dropDisc = function (colNum, colNode, playerNum) {
-//     // TODO: Add a disc to the DOM node colNode for the current player
-//     // <div class="disc red"></div>
-// ​
-//     // need to create the discs (red and black) javascript command to create new DOM
-//     // createElement
-    
-//     // TODO: Add a disc to the boardModel based on row and column we are in
-//     let redPiece = document.createElement('div')
-//     redPiece.className = 'red piece'  // need to add the red class
-//     let blackPiece = document.createElement('div') // need to add the black class
-//     blackPiece.className = 'black piece' 
-// ​
-//  for (let colIndex= 0; colIndex < boardModel.length; colIndex++) {
-//     if ((playerNum === 1) && (colNum.childElementCount !== 6)) {
-//         colNode.appendChild(redPiece)
-//         numberOfDiscsDropped++
-//         return true
-//     }
-// ​
-//     else if ((playerNum === 2) && (colNum.childElementCount !== 6)) {
-//         colNode.appendChild(blackPiece)  
-//         numberOfDiscsDropped++
-//         return true
-//     }
-//     // columNum.childElementCount to find out how many discs are in the column and then subtract 
-//     // to figure out the row number we are in.....BASED on how many "children(discs)" are in the column
-// }
-// }
-// // do not need to call drop disc 
 
 const dropDisc = function (colNum, colNode, playerNum) {
     // TODO: Add a disc to the DOM node colNode for the current player
@@ -105,23 +77,30 @@ const dropDisc = function (colNum, colNode, playerNum) {
     blackPiece.className = 'black piece'
 
  for (let colIndex= 0; colIndex < boardModel.length; colIndex++) {
-    if ((playerNum === 1) && (colNum.childElementCount !== 6)) {
+    
+    if (isColumnFull() === true) {
+        return
+    }
+    
+    if ((playerNum === 1) && (colNode.childElementCount !== 6)) {
         colNode.appendChild(redPiece)
         numberOfDiscsDropped++
         return true
     }
 
-    else if ((playerNum === 2) && (colNum.childElementCount !== 6)) {
+    else if ((playerNum === 2) && (colNode.childElementCount !== 6)) {
         colNode.appendChild(blackPiece)  
         numberOfDiscsDropped++
         return true
     }
+
 }
 }
 
 function vertWin(model) {
     for (let i = 0; i < 3; i++) {
         for (let n = 0; n < model[i].length; n++) {
+            // console.log(model[i].length)
             if ((model[i][n] === model[i+1][n]) && 
             (model[i][n] === model[i+2][n]) &&
             (model[i][n] === model[i+3][n]) &&
@@ -183,27 +162,23 @@ const winnerDiagonalDown = function (model) {
 }
 
 
-// const isATie = function (model) {
-//     return  (numberOfDiscsDropped === 42)
-//     return false
-// }
-
 const isGameOver = function (model) { // pure function
     // Check for a win
+    console.log(model)
     if (vertWin(model) ||
         winnerHorizontal(model) ||
         winnerDiagonalUp(model) ||
         winnerDiagonalDown(model)) {
         return "win"
     }
-        
-    // Check for a tie (numberofDiscsDropped === 42)
-    const isATie = function (model) {
-    return (numberOfDiscsDropped === 42)
-    }
-
+    
     return false // false, "tie", "win"
 }
+
+const isATie = function () {
+return (numberOfDiscsDropped === 42)
+}
+
 
 const switchToNextPlayer = function () {
     //     TODO: Toggle currentPlayer variable 1<-->2
@@ -229,9 +204,8 @@ const columnClickHandler = function (event) {
         displayMessage("Can't drop a disc in a full column")
     } else {
         dropDisc(columnNum, selectedCol, currentPlayer)
-
         const gameStatus = isGameOver(boardModel)
-        if (gameStatus === "tie") {
+        if (isATie() === true) {
             displayTieMessage()
         } else if (gameStatus === "win") {
             displayWinMessage()
