@@ -46,19 +46,46 @@ const displayWinMessage = function () {
     displayMessage("Winner is _____")    
 }
 
-const isColumnFull = function (colNum) {
-    // TODO: Look at the boardModel to determine if col is full
-    return false // or true
-}
+// const isColumnFull = function (colNum) {
+//     // TODO: Look at the boardModel to determine if col is full
+//     for (let rowNum=0; rowNum<6; rowNum++) {
+//         for (let colNum=0; colNum<boardModel[rowNum].length; colNum++) {
+           
+//             if (colNum.childElementCount !== 6) {
+//                 console.log(rowNum.childElementCount)
+
+//                 return false // or true
+//             }
+//         }
+//     }
+//     console.log(colNum)
+//     return true
+
+// }
+// isColumnFull()
 
 const dropDisc = function (colNum, colNode, playerNum) {
     // TODO: Add a disc to the DOM node colNode for the current player
     // <div class="disc red"></div>
     
     // TODO: Add a disc to the boardModel
-    numberOfDiscsDropped++
-}
+    let redPiece = document.querySelector('.red.piece')
+    let blackPiece = document.querySelector('.black.piece')
 
+    if ((playerNum === 1) && (colNum.childElementCount === 0)) {
+        colNode.appendChild(redPiece)
+        numberOfDiscsDropped++
+        return true
+    }
+
+    else if ((playerNum === 2) && (colNum.childElementCount === 0)) {
+        colNode.appendChild(blackPiece)  
+        numberOfDiscsDropped++
+        return true
+    }
+ 
+}
+dropDisc()
 
 function vertWin(model) {
     for (let i = 0; i < 3; i++) {
