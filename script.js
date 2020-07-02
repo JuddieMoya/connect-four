@@ -72,18 +72,19 @@ const dropDisc = function (colNum, colNode, playerNum) {
     let redPiece = document.querySelector('.red.piece')
     let blackPiece = document.querySelector('.black.piece')
 
-    if ((playerNum === 1) && (colNum.childElementCount === 0)) {
+ for (let colIndex= 0; colIndex < boardModel.length; colIndex++) {
+    if ((playerNum === 1) && (colNum.childElementCount !== 6)) {
         colNode.appendChild(redPiece)
         numberOfDiscsDropped++
         return true
     }
 
-    else if ((playerNum === 2) && (colNum.childElementCount === 0)) {
+    else if ((playerNum === 2) && (colNum.childElementCount !== 6)) {
         colNode.appendChild(blackPiece)  
         numberOfDiscsDropped++
         return true
     }
- 
+}
 }
 dropDisc()
 
@@ -176,10 +177,10 @@ const switchToNextPlayer = function () {
     //     TODO: Toggle currentPlayer variable 1<-->2
 }
 
-const columnClickHandler = function (eventObj) {
-    const selectedCol = eventObj.currentTarget
+const columnClickHandler = function (event) {
+    const selectedCol = event.currentTarget
     const columnNum = Number(selectedCol.id.slice(-1))
-    // console.log("Click on column " + columnNum)
+    console.log("Click on column " + columnNum)
     if (isColumnFull(columnNum)) {
         displayMessage("Can't drop a disc in a full column")
     } else {
@@ -195,6 +196,7 @@ const columnClickHandler = function (eventObj) {
         }
     }
 }
+
 
 const setUpEventListeners = function () {
     document.querySelector('#col0').addEventListener('click', columnClickHandler)
