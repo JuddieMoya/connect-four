@@ -85,6 +85,10 @@ const dropDisc = function (colNum, colNode, playerNum) {
     if ((playerNum === 1) && (colNode.childElementCount !== 6)) {
         colNode.appendChild(redPiece)
         numberOfDiscsDropped++
+
+        // let rowNum = 6 - (colNum.childElementCount)
+        // console.log(boardModel[rowNum][colNum])
+           
         return true
     }
 
