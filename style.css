@@ -9,18 +9,6 @@
 
     position: relative;
 }
-/* .row {
-    background-color: transparent;
-    width: 100%;
-    height: 15%;
-    border: 3px solid rgb(71, 163, 238);
-   
-}
-#rowshelf {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-} */
 .column {
     background-color: rgb(255, 255, 255);
     display: flex;
@@ -29,15 +17,30 @@
     border: 3px solid rgb(71, 163, 238);
     flex-direction: column-reverse;
 }
+.column:hover {
+    background-color: rgba(71, 163, 238, 0.5);
+}
 .piece {
     height: 83px;
     width: 83px;
     border-radius: 50%;
     /* display: flex; */
+    margin-left: 5px;
 }
 .red {
     background-color: red;
 }
 .black {
     background-color: black;
+}
+button {
+    background-color: rgb(71, 163, 238);
+    color: white;
+    font-weight: bold;
+    border-radius: 25%;
+    height: 50px;
+    width: 100px;
+}
+h1 {
+    display: inline;
 }

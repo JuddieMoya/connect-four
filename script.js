@@ -19,8 +19,17 @@ MVP - Minimum Viable Product
     - announce that the game is over
 
 */
+// variables to call reset functions
+const col0 = document.getElementById("col0");
+const col1 = document.getElementById("col1");
+const col2 = document.getElementById("col2");
+const col3 = document.getElementById("col3");
+const col4 = document.getElementById("col4");
+const col5 = document.getElementById("col5");
+const col6 = document.getElementById("col6");
 
-const boardModel = [
+let boardModel = [
+    [ null, null, null, null, null, null, null ],
     [ null, null, null, null, null, null, null ],
     [ null, null, null, null, null, null, null ],
     [ null, null, null, null, null, null, null ],
@@ -36,15 +45,17 @@ const displayMessage = function (message) { // Stub
     // Clear out the message div
     // Add new message to div
     console.log(message)
+    document.getElementById("game-status").innerText = message;
 }
-const displayCurrentPlayer = function (playerNum) {
-    displayMessage("Current player: " + playerNum)
+const displayCurrentPlayer = function () {
+    console.log("Current player: " + currentPlayer)
+    document.getElementById("current-player").innerText = "Current player: " + currentPlayer;
 }
 const displayTieMessage = function () {
-    displayMessage("Tie game!")
+    displayMessage("Tie game! Click 'new game' to play again.")
 }
 const displayWinMessage = function () {
-    displayMessage("Winner is _____")    
+    displayMessage("Winner is: Player " + currentPlayer);
 }
 
 const isColumnFull = function () {
@@ -75,31 +86,27 @@ const dropDisc = function (colNum, colNode, playerNum) {
     redPiece.className = 'red piece'
     let blackPiece = document.createElement('div')
     blackPiece.className = 'black piece'
+      if (isColumnFull() === true) {
+                return
+            }
+            
+            if ((playerNum === 1) && (colNode.childElementCount !== 6)) {
+                boardModel[Number(colNode.id[3])].unshift(1);
+                boardModel[Number(colNode.id[3])].pop();
+                colNode.appendChild(redPiece)
+                numberOfDiscsDropped++
+                return true;
+            }
 
- for (let colIndex= 0; colIndex < boardModel.length; colIndex++) {
-    
-    if (isColumnFull() === true) {
-        return
-    }
-    
-    if ((playerNum === 1) && (colNode.childElementCount !== 6)) {
-        colNode.appendChild(redPiece)
-        numberOfDiscsDropped++
-
-        // let rowNum = 6 - (colNum.childElementCount)
-        // console.log(boardModel[rowNum][colNum])
-           
-        return true
-    }
-
-    else if ((playerNum === 2) && (colNode.childElementCount !== 6)) {
-        colNode.appendChild(blackPiece)  
-        numberOfDiscsDropped++
-        return true
-    }
-
-}
-}
+            else if ((playerNum === 2) && (colNode.childElementCount !== 6)) {
+                colNode.appendChild(blackPiece)  
+                console.log(colNode);
+                boardModel[Number(colNode.id[3])].unshift(2);
+                boardModel[Number(colNode.id[3])].pop();
+                numberOfDiscsDropped++
+                return true;
+            }
+        }
 
 function vertWin(model) {
     for (let i = 0; i < 3; i++) {
@@ -180,7 +187,7 @@ const isGameOver = function (model) { // pure function
 }
 
 const isATie = function () {
-return (numberOfDiscsDropped === 42)
+    return (numberOfDiscsDropped === 42)
 }
 
 
@@ -190,12 +197,12 @@ const switchToNextPlayer = function () {
     switch(currentPlayer) {
         case 1: currentPlayer = 2
         console.log("current player is " + currentPlayer)
-
+        displayCurrentPlayer();
         break
 
         case 2: currentPlayer = 1
         console.log("current player is " + currentPlayer)
-
+        displayCurrentPlayer();
         break
     }
 }
@@ -291,6 +298,39 @@ const testwinnerDiagonalUp = function () {
 }
 testwinnerDiagonalUp()
 
+document.getElementById("new-game").onclick = function() {
+    while (col0.firstChild) {
+        col0.removeChild(col0.lastChild);
+    }
+    while (col1.firstChild) {
+        col1.removeChild(col1.lastChild);
+    }
+    while (col2.firstChild) {
+        col2.removeChild(col2.lastChild);
+    }
+    while (col3.firstChild) {
+        col3.removeChild(col3.lastChild);
+    }
+    while (col4.firstChild) {
+        col4.removeChild(col4.lastChild);
+    }
+    while (col5.firstChild) {
+        col5.removeChild(col5.lastChild);
+    }
+    while (col6.firstChild) {
+        col6.removeChild(col6.lastChild);
+    }
 
-
-
+    currentPlayer = 1;
+    numberOfDiscsDropped = 0;
+    document.getElementById("game-status").innerText = "";
+    boardModel = [
+        [ null, null, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ],
+        [ null, null, null, null, null, null, null ]
+    ]
+}
