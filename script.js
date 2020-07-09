@@ -29,13 +29,13 @@ const col5 = document.getElementById("col5");
 const col6 = document.getElementById("col6");
 
 let boardModel = [
-    [ null, null, null, null, null, null, null ],
-    [ null, null, null, null, null, null, null ],
-    [ null, null, null, null, null, null, null ],
-    [ null, null, null, null, null, null, null ],
-    [ null, null, null, null, null, null, null ],
-    [ null, null, null, null, null, null, null ],
-    [ null, null, null, null, null, null, null ]
+    [ null, null, null, null, null, null, ],
+    [ null, null, null, null, null, null, ],
+    [ null, null, null, null, null, null, ],
+    [ null, null, null, null, null, null, ],
+    [ null, null, null, null, null, null, ],
+    [ null, null, null, null, null, null, ],
+    [ null, null, null, null, null, null, ],
 ]
 let currentPlayer = 1 // 1 or 2
 let numberOfDiscsDropped = 0
@@ -90,9 +90,10 @@ const dropDisc = function (colNum, colNode, playerNum) {
                 return
             }
             
+            let coordinate = boardModel[Number(colNode.id[3])].indexOf(null);
             if ((playerNum === 1) && (colNode.childElementCount !== 6)) {
-                boardModel[Number(colNode.id[3])].unshift(1);
-                boardModel[Number(colNode.id[3])].pop();
+                boardModel[Number(colNode.id[3])].splice(coordinate, 1, 1);
+                
                 colNode.appendChild(redPiece)
                 numberOfDiscsDropped++
                 return true;
@@ -101,17 +102,17 @@ const dropDisc = function (colNum, colNode, playerNum) {
             else if ((playerNum === 2) && (colNode.childElementCount !== 6)) {
                 colNode.appendChild(blackPiece)  
                 console.log(colNode);
-                boardModel[Number(colNode.id[3])].unshift(2);
-                boardModel[Number(colNode.id[3])].pop();
+                boardModel[Number(colNode.id[3])].splice(coordinate, 1, 2);
                 numberOfDiscsDropped++
                 return true;
             }
         }
 
+// this may check for horizontal
 function vertWin(model) {
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 4; i++) {
         for (let n = 0; n < model[i].length; n++) {
-            // console.log(model[i].length)
+            console.log(model[i].length)
             if ((model[i][n] === model[i+1][n]) && 
             (model[i][n] === model[i+2][n]) &&
             (model[i][n] === model[i+3][n]) &&
@@ -123,14 +124,16 @@ function vertWin(model) {
     return false;
 }
 
-
+// this may check for vertical
 const winnerHorizontal = function (model) {
-    for (let rowNum=0; rowNum<6; rowNum++) {
+    console.log(model.length)
+    for (let rowNum=0; rowNum<7; rowNum++) {
         for (let colNum=0; colNum<model[rowNum].length; colNum++) {
             if (model[rowNum][colNum] === model[rowNum][colNum+1] &&
                 model[rowNum][colNum] === model[rowNum][colNum+2] &&
                 model[rowNum][colNum] === model[rowNum][colNum+3] &&
                 model[rowNum][colNum] !== null) {
+                    console.log('hi')
                 return true
             }
         }
@@ -139,12 +142,13 @@ const winnerHorizontal = function (model) {
 }
 
 const winnerDiagonalUp = function (model) {
-    for (let rowNum=0; rowNum<3; rowNum++) {
-                for (let colNum=0; colNum<model[rowNum].length; colNum++) {
+    for (let rowNum=0; rowNum<=3; rowNum++) {
+                for (let colNum=0; colNum<6; colNum++) {
                     if (model[rowNum][colNum] === model[rowNum+1][colNum+1] &&
                         model[rowNum][colNum] === model[rowNum+2][colNum+2] &&
                         model[rowNum][colNum] === model[rowNum+3][colNum+3] &&
                         model[rowNum][colNum] !== null) {
+                            console.log('hi')
                         return true
                     }
                 }
@@ -153,17 +157,18 @@ const winnerDiagonalUp = function (model) {
 }
 
 const winnerDiagonalDown = function (model) {
-    for (let rowNum=0; rowNum<3; rowNum++) {
+    for (let rowNum=0; rowNum<4; rowNum++) {
         for (let colNum=0; colNum<4; colNum++) {
             if ( 
                 model[rowNum][colNum] !== null &&
-                model[rowNum][colNum] === model[rowNum+1][colNum+1] &&
-                model[rowNum][colNum] === model[rowNum+2][colNum+2] &&
-                model[rowNum][colNum] === model[rowNum+3][colNum+3] 
+                model[rowNum][colNum] === model[rowNum+1][colNum-1] &&
+                model[rowNum][colNum] === model[rowNum+2][colNum-2] &&
+                model[rowNum][colNum] === model[rowNum+3][colNum-3] 
             ){
-                console.log(model[rowNum+1][colNum+1])
-                console.log(model[rowNum+2][colNum+2])
-                console.log(model[rowNum+3][colNum+3])
+                console.log(model[rowNum+1][colNum-1])
+                console.log(model[rowNum+2][colNum-2])
+                console.log(model[rowNum+3][colNum-3])
+                console.log('hello')
 
                 return true
             }
@@ -296,7 +301,7 @@ const testwinnerDiagonalUp = function () {
         [    2,    1,    2,    1,    1,    2,    1 ]
     ])))
 }
-testwinnerDiagonalUp()
+// testwinnerDiagonalUp()
 
 document.getElementById("new-game").onclick = function() {
     while (col0.firstChild) {
@@ -325,12 +330,12 @@ document.getElementById("new-game").onclick = function() {
     numberOfDiscsDropped = 0;
     document.getElementById("game-status").innerText = "";
     boardModel = [
-        [ null, null, null, null, null, null, null ],
-        [ null, null, null, null, null, null, null ],
-        [ null, null, null, null, null, null, null ],
-        [ null, null, null, null, null, null, null ],
-        [ null, null, null, null, null, null, null ],
-        [ null, null, null, null, null, null, null ],
-        [ null, null, null, null, null, null, null ]
+        [ null, null, null, null, null, null, ],
+        [ null, null, null, null, null, null, ],
+        [ null, null, null, null, null, null, ],
+        [ null, null, null, null, null, null, ],
+        [ null, null, null, null, null, null, ],
+        [ null, null, null, null, null, null, ],
+        [ null, null, null, null, null, null, ],
     ]
 }

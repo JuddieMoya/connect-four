@@ -3,7 +3,7 @@ https://amandalynnes.gitlab.io/connect-four-assessment
 
 We recieved help from the following people: Amanda Yonce & Joseph, Eric Hanson, Randy Cox, and Michelle Hoelzer.
 
-We built off of Randy's started code from demo.
+We built off of Randy's starter code from demo.
 
 Group members: Judith Moya, Reginald Jefferson, Jalon Dodson, and Amanda Simmons
 
