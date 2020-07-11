@@ -2,15 +2,19 @@
     box-sizing: border-box;
     
 }
+body {
+    background-color: rgb(247, 230, 157);
+}
 #board {
     display: flex;
     height: 500px;
     width: 700px;
 
     position: relative;
+    /* left: 25% */
 }
 .column {
-    background-color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.726);
     display: flex;
     flex-grow: 1;
     width: 150px;
@@ -18,7 +22,7 @@
     flex-direction: column-reverse;
 }
 .column:hover {
-    background-color: rgba(71, 163, 238, 0.5);
+    background-color: rgba(69, 164, 241, 0.61);
 }
 .piece {
     height: 83px;
